@@ -6,7 +6,9 @@ use Symfony\Component\Form\DataTransformerInterface;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\Form\Exception\TransformationFailedException;
-use Symfony\Component\Form\Exception\FormException;
+
+//use Symfony\Component\Form\Exception\FormException;
+use Symfony\Component\Form\Exception\UnexpectedTypeException as FormException;
 
 class EntityToSelect2ValueTransformer implements DataTransformerInterface
 {
@@ -32,7 +34,7 @@ class EntityToSelect2ValueTransformer implements DataTransformerInterface
             throw new UnexpectedTypeException($entity, 'object');
         }
         if (!$this->unitOfWork->isInIdentityMap($entity)) {
-            throw new FormException('Entities passed to the choice field must be managed');
+            throw new FormException('Entities passed to the choice field must be managed', 'string');
         }
 
         return json_encode(array(

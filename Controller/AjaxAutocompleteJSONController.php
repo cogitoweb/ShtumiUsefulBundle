@@ -47,7 +47,7 @@ class AjaxAutocompleteJSONController extends Controller
                 throw new \Exception('Unexpected value of parameter "search"');
         }
 
-	$property = $entity_inf['property'];
+        $property = $entity_inf['property'];
 
         if ($entity_inf['case_insensitive']) {
                 $where_clause_lhs = 'WHERE LOWER(e.' . $property . ')';
@@ -58,14 +58,12 @@ class AjaxAutocompleteJSONController extends Controller
                 $where_clause_rhs = 'LIKE :like';
         }
 
-
-
         $results = $em->createQuery(
-            'SELECT e.' . $property . '
+            'SELECT distinct e.' . $property . '
              FROM ' . $entity_inf['class'] . ' e ' .
              $where_clause_lhs . ' ' . $where_clause_rhs . ' ' .
             'ORDER BY e.' . $property)
-            ->setParameter('like', $like )
+            ->setParameter('like', str_replace('\\', '\\\\',$like))
             ->setMaxResults($maxRows)
             ->getScalarResult();
 

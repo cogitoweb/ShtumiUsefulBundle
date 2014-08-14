@@ -7,7 +7,9 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\Form\Exception\TransformationFailedException;
-use Symfony\Component\Form\Exception\FormException;
+
+//use Symfony\Component\Form\Exception\FormException;
+use Symfony\Component\Form\Exception\UnexpectedTypeException as FormException;
 
 class EntityToPropertyTransformer implements DataTransformerInterface
 {
@@ -32,7 +34,7 @@ class EntityToPropertyTransformer implements DataTransformerInterface
         }
 
         if (!$this->unitOfWork->isInIdentityMap($entity)) {
-            throw new FormException('Entities passed to the choice field must be managed');
+            throw new FormException('Entities passed to the choice field must be managed', 'string');
         }
 
         if ($this->property) {
